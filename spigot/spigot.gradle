@@ -1,8 +1,6 @@
-import kr.entree.spigradle.data.Load
-
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.1.1'
+    id 'io.typst.spigradle' version '3.1.2'
 }
 
 group 'kr.entree'
@@ -11,19 +9,21 @@ version '1.0-SNAPSHOT'
 compileJava.options.encoding 'UTF-8'
 
 repositories {
-    protocolLib()
+    mavenCentral()
+    spigotmc()
     jitpack() // For vault
 }
 
 dependencies {
     compileOnly spigot()
     compileOnly protocolLib()
-    compileOnly(vaultAll()) { // instead of vault() for the dependency resolution by debug task 'prepareSpigotPlugins'.
+    compileOnly(vault()) {
         transitive = false // No want to import vault's internal dependencies.
     }
     testImplementation group: 'junit', name: 'junit', version: '4.12'
-    testImplementation mockBukkit()
 }
+
+import io.typst.spigradle.spigot.*
 
 spigot {
     description 'A sample plugin'

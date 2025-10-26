@@ -1,8 +1,8 @@
-import kr.entree.spigradle.kotlin.*
+import io.typst.spigradle.bungee.*
 
 plugins {
-    kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.bungee") version "2.1.1"
+    kotlin("jvm") version "2.2.0"
+    id("io.typst.spigradle.bungee") version "3.1.2"
 }
 
 group = "kr.entree"
@@ -11,7 +11,9 @@ version = "1.0-SNAPSHOT"
 tasks.compileJava.get().options.encoding = "UTF-8"
 
 repositories {
-    sonatype() // For Bungeecord
+    mavenCentral()
+    sonatype()
+    minecraftLibraries()
 }
 
 dependencies {
@@ -21,7 +23,7 @@ dependencies {
 }
 
 bungee {
-    description = "A sample Bungeecord plugin"
+    description.set("A sample Bungeecord plugin")
     author = "Me"
     softDepends = listOf("DepPlugin", "DepPlugin2")
 }

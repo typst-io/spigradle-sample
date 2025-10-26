@@ -1,9 +1,10 @@
-import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.kotlin.*
+import io.typst.spigradle.spigot.Load
+import io.typst.spigradle.spigot.*
+import io.typst.spigradle.*
 
 plugins {
-    kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle") version "2.1.1"
+    kotlin("jvm") version "2.2.0"
+    id("io.typst.spigradle") version "3.1.2"
 }
 
 group = "kr.entree"
@@ -12,7 +13,8 @@ version = "1.0-SNAPSHOT"
 tasks.compileJava.get().options.encoding = "UTF-8"
 
 repositories {
-    protocolLib()
+    mavenCentral()
+    spigotmc()
     jitpack() // For vault
 }
 
@@ -20,16 +22,15 @@ dependencies {
     implementation(kotlin("stdlib-jdk8")) // Maybe you need to apply the plugin 'shadowJar' for shading 'kotlin-stdlib'.
     compileOnly(spigot())
     compileOnly(protocolLib())
-    compileOnly(vaultAll()) { // instead of vault() for the dependency resolve by debug task 'prepareSpigotPlugins'.
+    compileOnly(vault()) { // instead of vault() for the dependency resolve by debug task 'prepareSpigotPlugins'.
         isTransitive = false // No want to import vault's internal dependencies.
     }
     testImplementation("junit:junit:4.12")
-    testImplementation(mockBukkit())
     testImplementation(kotlin("stdlib-jdk8"))
 }
 
 spigot {
-    description = "A sample plugin"
+    description.set("A sample plugin")
     depends = listOf("ProtocolLib", "Vault")
     load = Load.STARTUP
     commands {

@@ -1,8 +1,6 @@
-import kr.entree.spigradle.data.*
-
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.nukkit' version '2.1.1'
+    id 'io.typst.spigradle.nukkit' version '3.1.2'
 }
 
 group 'kr.entree'
@@ -10,10 +8,18 @@ version '1.0-SNAPSHOT'
 
 compileJava.options.encoding 'UTF-8'
 
+repositories {
+    mavenCentral()
+    openCollabRelease()
+    openCollabSnapshot()
+}
+
 dependencies {
     compileOnly nukkitX()
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
+
+import io.typst.spigradle.spigot.*
 
 nukkit {
     description 'A sample NukkitX plugin'

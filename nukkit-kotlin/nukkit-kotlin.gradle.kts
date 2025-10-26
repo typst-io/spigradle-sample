@@ -1,15 +1,21 @@
-import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.kotlin.*
+import io.typst.spigradle.spigot.Load
+import io.typst.spigradle.nukkit.*
 
 plugins {
-    kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.nukkit") version "2.1.1"
+    kotlin("jvm") version "2.2.0"
+    id("io.typst.spigradle.nukkit") version "3.1.2"
 }
 
 group = "kr.entree"
 version = "1.0-SNAPSHOT"
 
 tasks.compileJava.get().options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+    openCollabRelease()
+    openCollabSnapshot()
+}
 
 dependencies {
     compileOnly(nukkit())
@@ -18,7 +24,7 @@ dependencies {
 }
 
 nukkit {
-    description = "A sample NukitX plugin"
+    description.set("A sample NukitX plugin")
     load = Load.STARTUP
     api = listOf("1.0.5")
     commands {
