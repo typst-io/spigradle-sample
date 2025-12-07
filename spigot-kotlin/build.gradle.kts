@@ -3,14 +3,11 @@ import io.typst.spigradle.spigot.*
 import io.typst.spigradle.*
 
 plugins {
-    kotlin("jvm") version "2.2.0"
-    id("io.typst.spigradle") version "3.1.2"
+    kotlin("jvm")
+    alias(libs.plugins.spigradle.spigot)
 }
 
-group = "kr.entree"
-version = "1.0-SNAPSHOT"
-
-tasks.compileJava.get().options.encoding = "UTF-8"
+description = "A sample plugin"
 
 repositories {
     mavenCentral()
@@ -19,9 +16,8 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8")) // Maybe you need to apply the plugin 'shadowJar' for shading 'kotlin-stdlib'.
-    compileOnly(spigot())
-    compileOnly(protocolLib())
+    compileOnly(spigot("1.21.8"))
+    compileOnly(protocolLib("5.4.0"))
     compileOnly(vault()) { // instead of vault() for the dependency resolve by debug task 'prepareSpigotPlugins'.
         isTransitive = false // No want to import vault's internal dependencies.
     }
@@ -30,11 +26,11 @@ dependencies {
 }
 
 spigot {
-    description.set("A sample plugin")
     depends = listOf("ProtocolLib", "Vault")
+    apiVersion = "1.21"
     load = Load.STARTUP
     commands {
-        create("give") {
+        register("give") {
             aliases = listOf("giv", "i")
             description = "A give command."
             permission = "sample.give"
@@ -42,14 +38,25 @@ spigot {
         }
     }
     permissions {
-        create("sample.give") {
+        register("sample.give") {
             description = "Allows give command"
             defaults = "true"
         }
-        create("sample.*") {
+        register("sample.*") {
             description = "Wildcard permission"
             defaults = "op"
             children = mapOf("test.foo" to true)
         }
+    }
+}
+
+debugSpigot {
+    version.set("1.21.8")
+    eula.set(true)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }

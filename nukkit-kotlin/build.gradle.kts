@@ -2,14 +2,9 @@ import io.typst.spigradle.spigot.Load
 import io.typst.spigradle.nukkit.*
 
 plugins {
-    kotlin("jvm") version "2.2.0"
-    id("io.typst.spigradle.nukkit") version "3.1.2"
+    kotlin("jvm")
+    alias(libs.plugins.spigradle.nukkit)
 }
-
-group = "kr.entree"
-version = "1.0-SNAPSHOT"
-
-tasks.compileJava.get().options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
@@ -19,7 +14,6 @@ repositories {
 
 dependencies {
     compileOnly(nukkit())
-    implementation(kotlin("stdlib-jdk8")) // Maybe you need to apply the plugin 'shadowJar' for shading 'kotlin-stdlib'.
     testImplementation("junit:junit:4.12")
 }
 

@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    alias libs.plugins.spigradle.spigot
+}
+
+repositories {
+    mavenCentral()
+    papermc()
+    jitpack() // For vault
+}
+
+dependencies {
+    compileOnly paper('1.21.8')
+    compileOnly protocolLib('5.4.0')
+    compileOnly(vault()) {
+        transitive = false // No want to import vault's internal dependencies.
+    }
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+spigot {
+    description 'A sample plugin'
+    depends 'ProtocolLib', 'Vault'
+    apiVersion '1.21'
+    load STARTUP // or implicitly "load STARTUP".
+    commands {
+        register('give') {
+            aliases 'giv', 'i'
+            description 'A give command.'
+            permission 'sample.give'
+            permissionMessage 'You do not have the permission.'
+        }
+    }
+    permissions {
+        register('sample.give') {
+            description 'Allows give command'
+            defaults 'true'
+        }
+        register('sample.*') {
+            description 'Wildcard permission'
+            defaults 'op'
+            children = ['test.foo': true]
+        }
+    }
+}
+
+debugSpigot {
+    version.set('1.21.8')
+    eula.set(true)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}

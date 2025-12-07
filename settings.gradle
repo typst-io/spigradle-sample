@@ -1,11 +1,14 @@
-rootProject.name = 'SpigradleSample'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
 
-include('spigot', 'spigot-kotlin', 'bungeecord', 'bungeecord-kotlin', 'nukkit', 'nukkit-kotlin')
+rootProject.name = 'spigradle-sample'
+
+include('spigot-kotlin', 'spigot', 'bungeecord', 'bungeecord-kotlin', 'nukkit', 'nukkit-kotlin')
 
 rootProject.children.each { project ->
-    def groovyFile = new File(project.buildFile.parentFile, "${project.name}.gradle")
-    project.buildFileName = groovyFile.isFile()
-            ? groovyFile.name
-            : "${project.name}.gradle.kts"
-    project.name = "sample-$project.name"
+    project.name = "spigradle-sample-$project.name"
 }

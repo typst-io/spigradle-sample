@@ -1,8 +1,8 @@
 import io.typst.spigradle.bungee.*
 
 plugins {
-    kotlin("jvm") version "2.2.0"
-    id("io.typst.spigradle.bungee") version "3.1.2"
+    kotlin("jvm")
+    alias(libs.plugins.spigradle.bungee)
 }
 
 group = "kr.entree"
@@ -18,7 +18,6 @@ repositories {
 
 dependencies {
     compileOnly(bungeecord())
-    implementation(kotlin("stdlib-jdk8")) // Maybe you need to apply the plugin 'shadowJar' for shading 'kotlin-stdlib'.
     testImplementation("junit:junit:4.12")
 }
 

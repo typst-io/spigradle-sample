@@ -1,34 +1,25 @@
 plugins {
     id 'java'
-    id 'io.typst.spigradle' version '3.1.2'
+    alias libs.plugins.spigradle.nukkit
 }
-
-group 'kr.entree'
-version '1.0-SNAPSHOT'
-
-compileJava.options.encoding 'UTF-8'
 
 repositories {
     mavenCentral()
-    spigotmc()
-    jitpack() // For vault
+    openCollabRelease()
+    openCollabSnapshot()
 }
 
 dependencies {
-    compileOnly spigot()
-    compileOnly protocolLib()
-    compileOnly(vault()) {
-        transitive = false // No want to import vault's internal dependencies.
-    }
+    compileOnly nukkitX()
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 import io.typst.spigradle.spigot.*
 
-spigot {
-    description 'A sample plugin'
-    depends 'ProtocolLib', 'Vault'
+nukkit {
+    description 'A sample NukkitX plugin'
     load Load.STARTUP // or implicitly "load STARTUP".
+    api '1.0.5'
     commands {
         give {
             aliases 'giv', 'i'
