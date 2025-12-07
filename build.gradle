@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    // Declaring all plugins here is is the recommended approach, See: https://docs.gradle.org/current/userguide/plugins_intermediate.html#sec:subprojects_plugins_dsl
+    // Declaring all plugins here is the recommended approach. See: https://docs.gradle.org/current/userguide/plugins_intermediate.html#sec:subprojects_plugins_dsl
     alias libs.plugins.kotlin.jvm apply false
     alias libs.plugins.spigradle.spigot apply false
     alias libs.plugins.spigradle.bungee apply false
