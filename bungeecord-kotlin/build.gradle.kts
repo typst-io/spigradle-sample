@@ -1,28 +1,31 @@
-import io.typst.spigradle.bungee.*
-
 plugins {
     kotlin("jvm")
-    alias(libs.plugins.spigradle.bungee)
+    alias(bungees.plugins.bungee)
 }
 
-group = "kr.entree"
+group = "dev.entree"
 version = "1.0-SNAPSHOT"
 
 tasks.compileJava.get().options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
-    sonatype()
-    minecraftLibraries()
+    bungeeRepos {
+        sonatype()
+        minecraftLibraries()
+    }
 }
 
 dependencies {
-    compileOnly(bungeecord())
-    testImplementation("junit:junit:4.12")
+    compileOnly(bungees.bungeecord.api)
+    testImplementation(platform(commons.junit.bom))
+    testImplementation(commons.junit.jupiter)
+    testRuntimeOnly(commons.junit.platform.launcher)
+    testImplementation(kotlin("stdlib-jdk8"))
 }
 
 bungee {
     description.set("A sample Bungeecord plugin")
     author = "Me"
-    softDepends = listOf("DepPlugin", "DepPlugin2")
+    softDepend = listOf("DepPlugin", "DepPlugin2")
 }

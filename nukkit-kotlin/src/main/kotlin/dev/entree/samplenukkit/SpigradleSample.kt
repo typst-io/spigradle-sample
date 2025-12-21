@@ -1,4 +1,4 @@
-package kr.entree.samplenukkit
+package dev.entree.samplenukkit
 
 import cn.nukkit.plugin.PluginBase
 

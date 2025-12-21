@@ -1,25 +1,27 @@
-import io.typst.spigradle.spigot.Load
-import io.typst.spigradle.nukkit.*
-
 plugins {
     kotlin("jvm")
-    alias(libs.plugins.spigradle.nukkit)
+    alias(nukkits.plugins.nukkit)
 }
 
 repositories {
     mavenCentral()
-    openCollabRelease()
-    openCollabSnapshot()
+    nukkitRepos {
+        openCollabRelease()
+        openCollabSnapshot()
+    }
 }
 
 dependencies {
-    compileOnly(nukkit())
-    testImplementation("junit:junit:4.12")
+    compileOnly(nukkits.nukkitX)
+    testImplementation(platform(commons.junit.bom))
+    testImplementation(commons.junit.jupiter)
+    testRuntimeOnly(commons.junit.platform.launcher)
+    testImplementation(kotlin("stdlib-jdk8"))
 }
 
 nukkit {
     description.set("A sample NukitX plugin")
-    load = Load.STARTUP
+    load = "STARTUP"
     api = listOf("1.0.5")
     commands {
         create("give") {

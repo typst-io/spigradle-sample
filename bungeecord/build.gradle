@@ -1,21 +1,25 @@
 plugins {
     id 'java'
-    alias libs.plugins.spigradle.bungee
+    alias bungees.plugins.bungee
 }
 
 repositories {
     mavenCentral()
-    sonatype()
-    minecraftLibraries()
+    bungeeRepos {
+        sonatype()
+        minecraftLibraries()
+    }
 }
 
 dependencies {
-    compileOnly bungeecord()
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    compileOnly bungees.bungeecord.api
+    testImplementation(platform(commons.junit.bom))
+    testImplementation(commons.junit.jupiter)
+    testRuntimeOnly(commons.junit.platform.launcher)
 }
 
 bungee {
-    description 'A sample Bungeecord plugin'
-    author 'Me'
-    softDepends 'DepPlugin', 'DepPlugin2'
+    description = 'A sample Bungeecord plugin'
+    author = 'Me'
+    softDepend = ['DepPlugin', 'DepPlugin2']
 }

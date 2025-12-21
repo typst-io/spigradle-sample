@@ -1,12 +1,5 @@
 [versions]
-spigradle = "3.7.2"
 kotlin = "2.2.21"
-idea-ext = "1.3"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-spigradle-spigot = { id = "io.typst.spigradle", version.ref = "spigradle" }
-spigradle-bungee = { id = "io.typst.spigradle.bungee", version.ref = "spigradle" }
-spigradle-nukkit = { id = "io.typst.spigradle.nukkit", version.ref = "spigradle" }
-spigradle-base = { id = "io.typst.spigradle.base", version.ref = "spigradle" }
-idea-ext = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "idea-ext" }

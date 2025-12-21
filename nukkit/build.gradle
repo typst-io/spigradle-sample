@@ -1,41 +1,45 @@
 plugins {
     id 'java'
-    alias libs.plugins.spigradle.nukkit
+    alias nukkits.plugins.nukkit
 }
 
 repositories {
     mavenCentral()
-    openCollabRelease()
-    openCollabSnapshot()
+    nukkitRepos {
+        openCollabRelease()
+        openCollabSnapshot()
+    }
 }
 
 dependencies {
-    compileOnly nukkitX()
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    compileOnly nukkits.nukkitX
+    testImplementation(platform(commons.junit.bom))
+    testImplementation(commons.junit.jupiter)
+    testRuntimeOnly(commons.junit.platform.launcher)
 }
 
 import io.typst.spigradle.spigot.*
 
 nukkit {
-    description 'A sample NukkitX plugin'
-    load Load.STARTUP // or implicitly "load STARTUP".
-    api '1.0.5'
+    description = 'A sample NukkitX plugin'
+    load = "STARTUP" // or implicitly "load STARTUP".
+    api = ['1.0.5']
     commands {
-        give {
-            aliases 'giv', 'i'
-            description 'A give command.'
-            permission 'sample.give'
-            permissionMessage 'You do not have the permission.'
+        register('give') {
+            aliases = ['giv', 'i']
+            description = 'A give command.'
+            permission = 'sample.give'
+            permissionMessage = 'You do not have the permission.'
         }
     }
     permissions {
-        'sample.give' {
-            description 'Allows give command'
-            defaults 'true'
+        register('sample.give') {
+            description = 'Allows give command'
+            defaults = 'true'
         }
-        'sample.*' {
-            description 'Wildcard permission'
-            defaults 'op'
+        register('sample.*') {
+            description = 'Wildcard permission'
+            defaults = 'op'
             children = ['test.foo': true]
         }
     }

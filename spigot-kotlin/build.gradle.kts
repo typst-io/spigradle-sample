@@ -1,34 +1,39 @@
-import io.typst.spigradle.spigot.Load
-import io.typst.spigradle.spigot.*
-import io.typst.spigradle.*
-
 plugins {
     kotlin("jvm")
-    alias(libs.plugins.spigradle.spigot)
+    alias(spigots.plugins.spigot)
+    alias(spigots.plugins.paperweight.userdev)
 }
 
 description = "A sample plugin"
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    spigotmc()
-    jitpack() // For vault
+    spigotRepos {
+        spigotmc()
+        protocolLib()
+        jitpack()
+        papermc()
+    }
 }
 
 dependencies {
-    compileOnly(spigot("1.21.8"))
-    compileOnly(protocolLib("5.4.0"))
-    compileOnly(vault()) { // instead of vault() for the dependency resolve by debug task 'prepareSpigotPlugins'.
+    paperweight.paperDevBundle(spigots.versions.spigot.api)
+    compileOnly(spigots.protocolLib)
+    compileOnly(spigots.vault.api) { // instead of vault() for the dependency resolve by debug task 'prepareSpigotPlugins'.
         isTransitive = false // No want to import vault's internal dependencies.
     }
-    testImplementation("junit:junit:4.12")
+    compileOnlySpigot(commons.ahocorasick)
+    testImplementation(platform(commons.junit.bom))
+    testImplementation(commons.junit.jupiter)
+    testRuntimeOnly(commons.junit.platform.launcher)
     testImplementation(kotlin("stdlib-jdk8"))
 }
 
 spigot {
-    depends = listOf("ProtocolLib", "Vault")
+    depend = listOf("ProtocolLib", "Vault")
     apiVersion = "1.21"
-    load = Load.STARTUP
+    load = "STARTUP"
     commands {
         register("give") {
             aliases = listOf("giv", "i")
@@ -50,13 +55,14 @@ spigot {
     }
 }
 
-debugSpigot {
-    version.set("1.21.8")
-    eula.set(true)
+tasks {
+    assemble {
+        dependsOn(reobfJar)
+    }
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
+debugSpigot {
+    version = "1.21.10"
+    eula = true
+    jarFile = tasks.reobfJar.flatMap { it.outputJar }
 }
